@@ -1,0 +1,40 @@
+﻿@model Product
+
+<div class="modal fade" id="removeProduct">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Remove Product</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="RemoveItem" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="id" />
+
+                    <div class="form-group">
+                        <label asp-for="name" class="control-label"></label>
+                        <input asp-for="name" class="form-control" readonly />
+                        <span asp-validation-for="name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="price" class="control-label"></label>
+                        <input asp-for="price" class="form-control" readonly />
+                        <span asp-validation-for="price" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="createdDate" class="control-label"></label>
+                        <input asp-for="createdDate" class="form-control" readonly />
+                        <span asp-validation-for="createdDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary removeClosebtn" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary"> Remove</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

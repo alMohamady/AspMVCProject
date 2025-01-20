@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace AspMVCProject.Models
 {
@@ -8,10 +9,13 @@ namespace AspMVCProject.Models
         public int id { get; set; }
 
         [Required, MaxLength(50)]
+        [DisplayName("Product name")]
         public string? name { get; set; }
 
+        [DisplayName("Product price")]
         public decimal price { get; set; }
 
-        public DateTime createdDate { get; set; }
+        [DisplayName("Create date")]
+        public DateTime createdDate { get; set; } = DateTime.Now;
     }
 }
