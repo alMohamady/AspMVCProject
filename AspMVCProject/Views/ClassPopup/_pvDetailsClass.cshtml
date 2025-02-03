@@ -1,0 +1,70 @@
+﻿@model AspMVCProject.Models.TheClass
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="modal fade" role="dialog" tabindex="-1" id="detailClassModal" aria-labelledby="detailClassModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Class</h3>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.className)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.className)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.teacher)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.teacher)
+                    </dd>
+                </dl>
+
+                <h4>Students</h4>
+
+                <table class="table table-bordered" id="studentsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Birth date</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.students.Count; i++)
+                        {
+                            <tr data-index="@i">
+                                <td>
+                                    @Html.DisplayFor(x => x.students[i].Name, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => x.students[i].BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(x => x.students[i].phone, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="dismiss()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function dismiss() {
+       $("#detailClassModal").modal('hide');
+    }
+</script>

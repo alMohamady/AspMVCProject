@@ -33,9 +33,15 @@
                 @Html.DisplayFor(modelItem => item.teacher)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <button type="button" class="btn btn-success editProductBtn" data-toggle="modal" data-target="#editProduct" onclick="editClass(@item.id)">
+                    Edit
+                </button> |
+                    <button type="button" class="btn btn-light detailsProduct" data-toggle="modal" data-target="#detailsProduct" onclick="detailClass(@item.id)">
+                    Details
+                </button> |
+                    <button type="button" class="btn btn-danger delteProduct" data-toggle="modal" data-target="#delteProduct" onclick="deleteClass(@item.id)">
+                    Delete
+                </button>
             </td>
         </tr>
 }
@@ -54,6 +60,43 @@
             success: function(result) {
                 $("#classSection").html(result);
                 $("#addClassModal").modal('show');
+            }
+        })
+    }
+
+
+     function editClass(id){
+        console.log("the id is :", id);
+        $.ajax({
+            type: "Get",
+            url: "/ClassPopup/Edit/" + id,
+            success: function(result) {
+                $("#classSection").html(result);
+                $("#editClassModal").modal('show');
+            }
+        })
+    }
+
+    function detailClass(id){
+        console.log("the id is :", id);
+        $.ajax({
+            type: "Get",
+            url: "/ClassPopup/Details/" + id,
+            success: function(result) {
+                $("#classSection").html(result);
+                $("#detailClassModal").modal('show');
+            }
+        })
+    }
+
+    function deleteClass(id){
+        console.log("the id is :", id);
+        $.ajax({
+            type: "Get",
+            url: "/ClassPopup/Delete/" + id,
+            success: function(result) {
+                $("#classSection").html(result);
+                $("#deleteClassModal").modal('show');
             }
         })
     }

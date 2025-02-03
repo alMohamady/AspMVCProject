@@ -1,5 +1,6 @@
 ﻿using AspMVCProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspMVCProject.Controllers
 {
@@ -31,6 +32,46 @@ namespace AspMVCProject.Controllers
         public IActionResult AddClass(TheClass theClass)
         {
             _db.classes.Add(theClass);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Details(int id)
+        {
+            var theClass = _db.classes.Where(x => x.id == id).Include(s => s.students).FirstOrDefault();
+            return PartialView("_pvDetailsClass", theClass);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var theClass = _db.classes.Where(x => x.id == id).Include(s => s.students).FirstOrDefault();
+            return PartialView("_pvEditClass", theClass);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(TheClass mdl)
+        {
+            List<TheClassStudent> students = _db.students.Where(x => x.theClassId == mdl.id).ToList();
+            _db.students.RemoveRange(students);
+            _db.SaveChanges();
+
+            _db.classes.Update(mdl);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        public IActionResult Delete(int id)
+        {
+            var theClass = _db.classes.Where(x => x.id == id).Include(s => s.students).FirstOrDefault();
+            return PartialView("_pvDeleteClass", theClass);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(TheClass mdl)
+        {
+            _db.Attach(mdl);
+            _db.Entry(mdl).State = EntityState.Deleted;
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
