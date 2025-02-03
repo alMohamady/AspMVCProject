@@ -29,7 +29,7 @@ namespace AspMVCProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddClass(TheClass theClass)
+        public IActionResult AddClass([FromBody] TheClass theClass)
         {
             _db.classes.Add(theClass);
             _db.SaveChanges();
