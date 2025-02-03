@@ -12,5 +12,8 @@ namespace AspMVCProject
 
         public DbSet<Product> products { get; set; }
 
+        public DbSet<TheClass> classes { get; set; }
+
+        public DbSet<TheClassStudent> students { get; set; }
     }
 }
