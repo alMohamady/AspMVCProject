@@ -1,0 +1,26 @@
+﻿@model mdlQrCoder
+
+<form asp-action="Index" >
+
+    <div class="row mt-2">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <label>Enter your url</label>
+            <input type="text" asp-for="ImageUrl" class="form-control" autocomplete="off" />
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <button type="submit" class="btn btn-primary">Generate</button>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.QrImageUrl))
+    {
+        <div class="row mt-2" id="qrCodeImage">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <img height="250" width="250" src="@Model.QrImageUrl" />
+            </div>
+        </div>
+    }
+</form>
