@@ -1,5 +1,6 @@
 ﻿using AspMVCProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspMVCProject.Controllers
 {
@@ -12,10 +13,39 @@ namespace AspMVCProject.Controllers
 
         private readonly AppDbContext _context;
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var products = _context.products.ToList();
-            return View(products);
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "price_desc" : "Price";
+
+            var products = from p in _context.products
+                           select p;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(n => n.name);
+                    break;
+                case "Date":
+                    products = products.OrderBy(n => n.createdDate);
+                    break;
+                case "date_desc":
+                    products = products.OrderByDescending(n => n.createdDate);
+                    break;
+                case "Price":
+                    products = products.OrderBy(n => n.price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(n => n.price);
+                    break;
+                default:
+                    products = products.OrderBy(n => n.name);
+                    break;
+            }
+
+
+            var  productList = await products.ToListAsync();
+            return View(productList);
         }
 
         public IActionResult AddItem()
